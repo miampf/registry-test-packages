@@ -1,19 +1,12 @@
-name: Build & publish images
+name: Build & publish image 2
 on: workflow_dispatch
 jobs:
   gen-build-push:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - dockerfile: ./test-package-1/Dockerfile
-            image: ghcr.io/miampf/test-package-1
-          - dockerfile: ./test-package-2/Dockerfile
-            image: ghcr.io/miampf/test-package-2
-          - dockerfile: ./test-package-3/Dockerfile
-            image: ghcr.io/miampf/test-package-3
     env:
+      IMAGE_NAME: test-package-2
       REPLACE_STRING: replaced-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout
@@ -35,13 +28,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ matrix.image }}
+          images: ${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ${{ matrix.dockerfile }}
+          file: ./test-package-2/Dockerfile
           push: true
-          tags: ghcr.io/miampf/${{ matrix.image }}:v0.${{ github.run_attempt }}.0
+          tags: ghcr.io/miampf/${{ env.IMAGE_NAME }}:v0.${{ github.run_attempt }}.0
           labels: ${{ steps.meta.outputs.labels }}
