@@ -1,12 +1,10 @@
 name: Build & publish images
 on: workflow_dispatch
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
 jobs:
-  replace-strings:
+  gen-build-push:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -20,8 +18,7 @@ jobs:
             image: ghcr.io/miampf/test-package-3
     env:
       REPLACE_STRING: replaced-${{ github.run_id }}-${{ github.run_attempt }}
-    steps:
-   permissions:
+    permissions:
       contents: read
       packages: write
     steps:
@@ -51,6 +48,6 @@ jobs:
         with:
           context: .
           file: ${{ matrix.dockerfile }}
-          push: true
-          tags: v0.${{ github.run_attempt }}.0
-          labels: ${{ steps.meta.outputs.labels }}
+        push: true
+        tags: v0.${{ github.run_attempt }}.0
+        labels: ${{ steps.meta.outputs.labels }}
