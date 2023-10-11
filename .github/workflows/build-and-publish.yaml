@@ -48,6 +48,6 @@ jobs:
         with:
           context: .
           file: ${{ matrix.dockerfile }}
-        push: true
-        tags: v0.${{ github.run_attempt }}.0
-        labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          tags: v0.${{ github.run_attempt }}.0
+          labels: ${{ steps.meta.outputs.labels }}
