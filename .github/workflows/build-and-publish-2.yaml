@@ -36,5 +36,5 @@ jobs:
           context: .
           file: ./test-package-2/Dockerfile
           push: true
-          tags: ghcr.io/miampf/${{ env.IMAGE_NAME }}:v0.${{ github.run_attempt }}.0
+          tags: ghcr.io/miampf/${{ env.IMAGE_NAME }}:v0.${{ github.run_attempt }}.0,ghcr.io/miampf/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
