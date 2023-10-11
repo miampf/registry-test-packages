@@ -43,5 +43,5 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
-          tags: v0.${{ github.run_attempt }}.0
+          tags: ghcr.io/miampf/${{ matrix.image }}:v0.${{ github.run_attempt }}.0
           labels: ${{ steps.meta.outputs.labels }}
